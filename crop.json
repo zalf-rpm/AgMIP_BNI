@@ -1,0 +1,125 @@
+{
+	"crops": {
+		"ZR": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/beet.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/sugar-beet/sugar-beet.json"],
+				"species": ["include-from-file", "monica-parameters/crops/sugar-beet.json"]
+			}
+		},
+		"WW": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/wheat.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/wheat/winter-wheat.json"],
+				"species": ["include-from-file", "monica-parameters/crops/wheat.json"]
+			}
+		},
+		"WB": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/barley.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/barley/winter-barley.json"],
+				"species": ["include-from-file", "monica-parameters/crops/barley.json"]
+			}
+		},
+		"WR": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/rye.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/rye/winter-rye.json"],
+				"species": ["include-from-file", "monica-parameters/crops/rye.json"]
+			}
+		}
+	},
+
+	"fert-params": {
+		"AN": ["include-from-file", "monica-parameters/mineral-fertilisers/AN.json"],
+		"UAN": ["include-from-file", "monica-parameters/mineral-fertilisers/UAN.json"]
+	},
+
+	"fert_min_template": {
+		"date": "2022-03-25",
+		"type": "MineralFertilization",
+		"amount": [72.0, "kg N"],
+		"partition": {
+			"Carbamid":0,
+			"NH4":0.5,
+			"NO3":0.5
+		  }
+	},
+
+	"irrig_template": {
+		"date": "2022-05-22",
+		"type": "Irrigation",
+		"amount": [20.0, "mm"]
+	},
+
+	"till_template": {
+		"date": "2022-04-11",
+		"type": "Tillage",
+		"depth": [0.1, "m"]
+	},
+
+	"cropRotationTemplates": {
+		"ZR": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "ZR"],
+					"date": "1993-21-05"
+				},
+				{
+					"type": "Harvest",
+					"date": "1993-06-10"
+				}
+			]
+		}],
+		"WW": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WW"],
+					"date": "1993-10-15"
+				},
+				{
+					"type": "Harvest",
+					"date": "1994-07-29"
+				}
+			]
+		}],
+		"WB": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WB"],
+					"date": "1994-09-26"
+				},
+				{
+					"type": "Harvest",
+					"date": "1994-07-29"
+				}
+			]
+		}],
+		"WR": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WR"],
+					"date": "1994-09-26"
+				},
+				{
+					"type": "Harvest",
+					"date": "1995-07-21"
+				}
+			]
+		}]
+	},
+
+	"cropRotation": ["ref", "cropRotationTemplates", "WW"],
+
+	"CropParameters": {
+		"=": ["include-from-file", "monica-parameters/general/crop.json"]
+	}
+}
