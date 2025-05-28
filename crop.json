@@ -1,0 +1,167 @@
+{
+	"crops": {
+		"WW": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/wheat.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/wheat/winter-wheat.json"],
+				"species": ["include-from-file", "monica-parameters/crops/wheat.json"]
+			}
+		},
+		"WB": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/barley.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/barley/winter-barley.json"],
+				"species": ["include-from-file", "monica-parameters/crops/barley.json"]
+			}
+		},
+		"WR": {
+			"is-winter-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/rye.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/rye/winter-rye.json"],
+				"species": ["include-from-file", "monica-parameters/crops/rye.json"]
+			}
+		},
+		"SM": {
+			"is-winter-crop": false,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/maize.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/maize/silage-maize_bs_dwd_pheno.json"],
+				"species": ["include-from-file", "monica-parameters/crops/maize_klimertrag.json"]
+			}
+		},
+		"SB": {
+			"is-winter-crop": false,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/barley.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/barley/spring-barley.json"],
+				"species": ["include-from-file", "monica-parameters/crops/barley.json"]
+			}
+		},
+		"SW": {
+			"is-winter-crop": false,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/wheat.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/wheat/spring-wheat.json"],
+				"species": ["include-from-file", "monica-parameters/crops/wheat.json"]
+			}
+		}
+	},
+
+	"fert-params": {
+		"AN": ["include-from-file", "monica-parameters/mineral-fertilisers/AN.json"],
+		"NS": ["include-from-file", "monica-parameters/mineral-fertilisers/NS.json"]
+	},
+
+	"fert_min_template": {
+		"date": "2022-03-25",
+		"type": "MineralFertilization",
+		"amount": [72.0, "kg N"],
+		"partition": {
+			"Carbamid":0,
+			"NH4":0.5,
+			"NO3":0.5
+		  }
+	},
+
+	"irrig_template": {
+		"date": "2022-05-22",
+		"type": "Irrigation",
+		"amount": [20.0, "mm"]
+	},
+
+	"till_template": {
+		"date": "2022-04-11",
+		"type": "Tillage",
+		"depth": [0.1, "m"]
+	},
+
+	"cropRotationTemplates": {
+		"WW": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WW"],
+					"date": "2001-11-07"
+				},
+				{
+					"type": "Harvest",
+					"date": "2002-07-31"
+				}
+			]
+		}],
+		"WB": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WB"],
+					"date": "2008-09-29"
+				},
+				{
+					"type": "Harvest",
+					"date": "2009-07-06"
+				}
+			]
+		}],
+		"WR": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "WR"],
+					"date": "2008-09-29"
+				},
+				{
+					"type": "Harvest",
+					"date": "2009-07-06"
+				}
+			]
+		}],
+		"SM": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "SM"],
+					"date": "2007-04-25"
+				},
+				{
+					"type": "Harvest",
+					"date": "2007-10-02"
+				}
+			]
+		}],
+		"SB": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "SB"],
+					"date": "2019-04-08"
+				},
+				{
+					"type": "Harvest",
+					"date": "2019-07-24"
+				}
+			]
+		}],
+		"SW": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "SW"],
+					"date": "2019-04-08"
+				},
+				{
+					"type": "Harvest",
+					"date": "2019-07-24"
+				}
+			]
+		}]
+	},
+
+	"cropRotation": ["ref", "cropRotationTemplates", "WW"],
+
+	"CropParameters": {
+		"=": ["include-from-file", "monica-parameters/general/crop.json"]
+	}
+}

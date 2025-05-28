@@ -1,0 +1,33 @@
+Management;Date;Measure;Depth
+manag1;19.05.1993;ploughing;18
+manag2;15.10.1993;cultivator drill;10
+manag3;10.08.1994;cultivator;15
+manag3;22.08.1994;rotary tiller;10
+manag3;19.09.1994;cultivator;10
+manag4;24.07.1995;cultivator;15
+manag4;09.09.1995;cultivator;15
+manag4;14.09.1995;cultivator;8
+manag5;26.03.1997;rotary tiller;10
+manag6;08.10.1997;cultivator drill ;10
+manag6;17.08.1998;cultivator;8
+manag7;19.05.1993;ploughing;18
+manag8;15.10.1993;cultivator drill;10
+manag8;10.08.1994;cultivator;15
+manag9;22.08.1994;rotary tiller;10
+manag9;19.09.1994;ploughing;22
+manag10;24.07.1995;cultivator;15
+manag10;09.09.1995;cultivator;15
+manag10;14.09.1995;ploughing;25
+manag11;08.10.1997;ploughing;22
+manag11;17.08.1998;cultivator;8
+manag12;19.05.1993;ploughing;18
+manag13;15.10.1993;cultivator drill;10
+manag14;10.08.1994;cultivator;15
+manag14;22.08.1994;rotary tiller;10
+manag14;19.09.1994;ploughing;22
+manag15;24.07.1995;cultivator;15
+manag15;09.09.1995;cultivator;15
+manag15;14.09.1995;cultivator;8
+manag16;26.03.1997;rotary tiller;10
+manag17;08.10.1997;cultivator drill;10
+manag17;17.08.1998;cultivator;8
