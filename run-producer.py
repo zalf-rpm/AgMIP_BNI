@@ -27,7 +27,7 @@ from datetime import datetime
 import monica_io3
 import shared
 
-def run_producer(server=None, port=None):
+def run_producer(server=None, port=None, exp_nos=None):
     context = zmq.Context()
     socket = context.socket(zmq.PUSH)  # pylint: disable=no-member
 
@@ -55,8 +55,21 @@ def run_producer(server=None, port=None):
     with open(config["crop.json"]) as _:
         crop_json = json.load(_)
 
+    with open("data/monica-parameters/mineral-fertilisers/AN.json") as f:
+        an_fert_params = json.load(f)
+
+    with open("data/monica-parameters/mineral-fertilisers/UAN.json") as f:
+        uan_fert_params = json.load(f)
+
+    with open("data/monica-parameters/organic-fertilisers/CAM.json") as f:
+        cam_fert_params = json.load(f)
+
+    with open("data/monica-parameters/organic-fertilisers/CAS.json") as f:
+        cas_fert_params = json.load(f)
+
     # Extract templates from crop configuration
     fert_min_template = crop_json.pop("fert_min_template")
+    fert_org_template = crop_json.pop("fert_org_template")
     irrig_template = crop_json.pop("irrig_template")
     till_template = crop_json.pop("till_template")
 
@@ -66,7 +79,7 @@ def run_producer(server=None, port=None):
     soil_profiles = defaultdict(list)
     prev_depth_m = 0
     prev_soil_name = None
-  
+
     for _, row in soil_df.iterrows():
         soil_name = row['Soil']
         if soil_name != prev_soil_name:
@@ -93,15 +106,18 @@ def run_producer(server=None, port=None):
     # Read metadata and management data
     metadata_df = pd.read_csv(f"{config['path_to_data_dir']}/Meta.csv", sep=';') #This is the path to the "Meta" file, which connects everything
     fert_min_df = pd.read_csv(f"{config['path_to_data_dir']}/Fertilisation_min.csv", sep=';')
+    fert_org_df = pd.read_csv(f"{config['path_to_data_dir']}/Fertilisation_org.csv", sep=';')
     irrig_df = pd.read_csv(f"{config['path_to_data_dir']}/Irrigation.csv", sep=';')
     till_df = pd.read_csv(f"{config['path_to_data_dir']}/Management.csv", sep=';')
 
     # Merge datasets
     merged_df_fert_min = pd.merge(metadata_df, fert_min_df, on='Fertilisation_min')
+    merged_df_fert_org = pd.merge(metadata_df, fert_org_df, on='Fertilisation_org')
     merged_df_irrig = pd.merge(metadata_df, irrig_df, on='Irrigation')
     merged_df_till = pd.merge(metadata_df, till_df, on='Management')
 
-    exp_no_to_fertilizers = defaultdict(dict)
+    exp_no_to_fertilizers_min = defaultdict(dict)
+    exp_no_to_fertilizers_org = defaultdict(dict)
     exp_no_to_irrigation = defaultdict(dict)
     exp_no_to_management = defaultdict(dict)
 
@@ -111,7 +127,24 @@ def run_producer(server=None, port=None):
         fert_min_temp = copy.deepcopy(fert_min_template)
         fert_min_temp["date"] = datetime.strptime(row['Date'], '%d.%m.%Y').strftime('%Y-%m-%d')
         fert_min_temp["amount"][0] = float(row['Amount_kg_ha'])
-        exp_no_to_fertilizers[row['Experiment']][fert_min_temp["date"]] = fert_min_temp
+        if row['Material'] == 'ammonium nitrate lime':
+            fert_min_temp["partition"] = copy.deepcopy(an_fert_params)
+        if row['Material'] == 'ammonium urea solution':
+            fert_min_temp["partition"] = copy.deepcopy(uan_fert_params)
+        exp_no_to_fertilizers_min[row['Experiment']][fert_min_temp["date"]] = fert_min_temp
+
+    for _, row in merged_df_fert_org.iterrows():
+        if pd.isna(row['Fertilisation_org']) or row['Fertilisation_org'] == 'no_fert':
+            continue
+        fert_org_temp = copy.deepcopy(fert_org_template)
+        fert_org_temp["date"] = datetime.strptime(row['Date'], '%d.%m.%Y').strftime('%Y-%m-%d')
+        fert_org_temp["amount"][0] = float(row['Amount_kg_ha'])
+        # fert_org_temp["parameters"] = copy.deepcopy(cam_fert_params)
+        if row['Material'] == 'Farmyard manure':
+            fert_org_temp["parameters"] = copy.deepcopy(cam_fert_params)
+        elif row['Material'] == 'Liquid manure':
+            fert_org_temp["parameters"] = copy.deepcopy(cas_fert_params)
+        exp_no_to_fertilizers_org[row['Experiment']][fert_org_temp["date"]] = fert_org_temp
 
     for _, row in merged_df_irrig.iterrows():
         if pd.isna(row['Irrigation']) or row['Irrigation'] in ['no_irrig', 'wet', 'dry', 1, 2]:
@@ -121,7 +154,8 @@ def run_producer(server=None, port=None):
         irrig_temp["amount"][0] = float(row['Amount_mm'])
         exp_no_to_irrigation[row['Experiment']][irrig_temp["date"]] = irrig_temp
 
-    for _, row in merged_df_till.iterrows(): #Management refers to soil management (tillage etc.)
+    # Soil management
+    for _, row in merged_df_till.iterrows():
         if pd.isna(row['Management']) or row['Management'] == 'no_manag':
             continue
         till_temp = copy.deepcopy(till_template)
@@ -134,6 +168,10 @@ def run_producer(server=None, port=None):
 
     env_template = None
     for exp_no, meta in exp_no_to_meta.items():
+        # Skip experiments not in the exp_nos list if exp_nos is provided
+        if exp_nos is not None and exp_no not in exp_nos:
+            continue
+
         # if meta['Crop'] not in ['ZR']:
         #     continue
 
@@ -157,13 +195,10 @@ def run_producer(server=None, port=None):
         env_template["params"]["siteParameters"]["HeightNN"] = float(meta['Elevation'])
         env_template["params"]["siteParameters"]["Latitude"] = float(meta['Lat'])
 
-        # if meta['CO2'] != 'no_co2' and not pd.isna(meta['CO2']):
-        #     env_template["params"]["userEnvironmentParameters"]["AtmosphericCO2"] = float(meta['CO2'])
-
         # complete crop rotation
         dates = set()
-        dates.update(exp_no_to_fertilizers[exp_no].keys(), exp_no_to_irrigation[exp_no].keys(),
-                     exp_no_to_management[exp_no].keys())
+        dates.update(exp_no_to_fertilizers_min[exp_no].keys(), exp_no_to_fertilizers_org[exp_no].keys(),
+                     exp_no_to_irrigation[exp_no].keys(), exp_no_to_management[exp_no].keys())
 
         worksteps_copy = copy.deepcopy(worksteps)
         sowing_date = datetime.strptime(meta['Sowing'], '%d.%m.%Y')
@@ -172,15 +207,23 @@ def run_producer(server=None, port=None):
         worksteps_copy[-1]["date"] = harvest_date.strftime('%Y-%m-%d')
 
         for date in sorted(dates):
-            if date in exp_no_to_fertilizers[exp_no]:
-                worksteps_copy.insert(-1, copy.deepcopy(exp_no_to_fertilizers[exp_no][date]))
+            if date in exp_no_to_fertilizers_min[exp_no]:
+                worksteps_copy.insert(-1, copy.deepcopy(exp_no_to_fertilizers_min[exp_no][date]))
+            if date in exp_no_to_fertilizers_org[exp_no]:
+                worksteps_copy.insert(-1, copy.deepcopy(exp_no_to_fertilizers_org[exp_no][date]))
             if date in exp_no_to_irrigation[exp_no]:
                 worksteps_copy.insert(-1, copy.deepcopy(exp_no_to_irrigation[exp_no][date]))
             if date in exp_no_to_management[exp_no]:
                 tillage_event = copy.deepcopy(exp_no_to_management[exp_no][date])
                 tillage_date = datetime.strptime(tillage_event["date"], '%Y-%m-%d')
-                # Only add tillage events happening after sowing and before harvest
-                if tillage_date >= sowing_date and tillage_date <= harvest_date:
+                # Add tillage events before sowing at the beginning of worksteps
+                if tillage_date < sowing_date:
+                    worksteps_copy.insert(0, tillage_event)
+                # Add tillage events after harvest at the end of worksteps
+                elif tillage_date > harvest_date:
+                    worksteps_copy.insert(-1, tillage_event)
+                # Add tillage events between sowing and harvest before the harvest
+                else:
                     worksteps_copy.insert(-1, tillage_event)
 
         env_template["cropRotation"][0]["worksteps"] = worksteps_copy
@@ -210,4 +253,8 @@ def run_producer(server=None, port=None):
     print(f"{os.path.basename(__file__)} done")
 
 if __name__ == "__main__":
+    # Run all experiments
     run_producer()
+
+    # Run specific experiments
+    # run_producer(exp_nos=["EX7"])

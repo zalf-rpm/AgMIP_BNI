@@ -1,7 +1,7 @@
 {
 	"crops": {
 		"ZR": {
-			"is-winter-crop": true,
+			"is-winter-crop": false,
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/beet.json"],
 			"cropParams": {
 				"cultivar": ["include-from-file", "monica-parameters/crops/sugar-beet/sugar-beet.json"],
@@ -39,15 +39,24 @@
 		"UAN": ["include-from-file", "monica-parameters/mineral-fertilisers/UAN.json"]
 	},
 
+	"fert-params-org": {
+		"CAM": ["include-from-file", "monica-parameters/organic-fertilisers/CAM.json"],
+		"CAS": ["include-from-file", "monica-parameters/organic-fertilisers/CAS.json"]
+	},
+
 	"fert_min_template": {
 		"date": "2022-03-25",
 		"type": "MineralFertilization",
 		"amount": [72.0, "kg N"],
-		"partition": {
-			"Carbamid":0,
-			"NH4":0.5,
-			"NO3":0.5
-		  }
+		"partition": ["ref", "fert-params", "AN"]
+	},
+
+	"fert_org_template": {
+		"date": "2022-03-25",
+		"type": "OrganicFertilization",
+		"amount": [72.0, "kg"],
+		"parameters": ["ref", "fert-params-org", "CAM"],
+		"incorporation": true
 	},
 
 	"irrig_template": {
@@ -68,7 +77,7 @@
 				{
 					"type": "Sowing",
 					"crop": ["ref", "crops", "ZR"],
-					"date": "1993-21-05"
+					"date": "1993-05-21"
 				},
 				{
 					"type": "Harvest",
