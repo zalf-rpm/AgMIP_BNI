@@ -1,4 +1,4 @@
-Fertilisation_min;Date;Amount_kg_ha;Material
+Fertilisation_org;Date;Amount_kg_ha;Material
 fert1;02.09.1992;33000;Farmyard manure
 fert1;14.10.1993;11000;Farmyard manure
 fert2;27.04.1994;8110;Liquid manure
