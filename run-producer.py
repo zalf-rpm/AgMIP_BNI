@@ -206,6 +206,25 @@ def run_producer(server=None, port=None, exp_nos=None):
         harvest_date = datetime.strptime(meta['Harvest'], '%d.%m.%Y')
         worksteps_copy[-1]["date"] = harvest_date.strftime('%Y-%m-%d')
 
+        # Residue management
+        residue = str(meta.get("Residues", "")).strip()
+
+        if "straw ploughed in" == residue:
+            worksteps_copy[-1]["shoot"] = {
+                "export": [0, "%"],
+                "incorporate": True
+            }
+        elif "straw exported" == residue:
+            worksteps_copy[-1]["shoot"] = {
+                "export": [100, "%"],
+                "incorporate": True
+            }
+        elif "leaves ploughed in" == residue:
+            worksteps_copy[-1]["leaf"] = {
+                "export": [0, "%"],
+                "incorporate": True
+            }
+
         for date in sorted(dates):
             if date in exp_no_to_fertilizers_min[exp_no]:
                 worksteps_copy.insert(-1, copy.deepcopy(exp_no_to_fertilizers_min[exp_no][date]))
@@ -242,8 +261,6 @@ def run_producer(server=None, port=None, exp_nos=None):
         # with open(f"out/env_template_{exp_no}.json", "w") as _:
         #     json.dump(env_template, _, indent=4)
 
-    #if env_template:
-        # send done message
     env_template["customId"] = {
             "no_of_exps": no_of_exps,
             "nodata": True,
@@ -257,4 +274,6 @@ if __name__ == "__main__":
     run_producer()
 
     # Run specific experiments
-    # run_producer(exp_nos=["EX7"])
+    # run_producer(exp_nos=["EX1", "EX2", "EX3", "EX4", "EX5", "EX6"])  # plot1
+    # run_producer(exp_nos=["EX7", "EX8", "EX9", "EX10", "EX11", "EX12")  # plot2
+    # run_producer(exp_nos=["EX13", "EX14", "EX15", "EX16", "EX17", "EX18"])  # plot3
