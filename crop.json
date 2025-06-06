@@ -1,5 +1,12 @@
 {
 	"crops": {
+		"OR": {
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/oil-radish.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/oil-radish/oil-radish.json"],
+				"species": ["include-from-file", "monica-parameters/crops/oil-radish.json"]
+			}
+		},
 		"ZR": {
 			"is-winter-crop": false,
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/beet.json"],
@@ -72,6 +79,20 @@
 	},
 
 	"cropRotationTemplates": {
+		"OR": [{
+			"is-cover-crop": true,
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "OR"],
+					"date": "1992-09-03"
+				},
+				{
+					"type": "Harvest",
+					"date": "1993-03-15"
+				}
+			]
+		}],
 		"ZR": [{
 			"worksteps": [
 				{

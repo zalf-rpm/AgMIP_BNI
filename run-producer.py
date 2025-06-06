@@ -104,7 +104,7 @@ def run_producer(server=None, port=None, exp_nos=None):
         soil_profiles[soil_name].append(layer)
 
     # Read metadata and management data
-    metadata_df = pd.read_csv(f"{config['path_to_data_dir']}/Meta.csv", sep=';') #This is the path to the "Meta" file, which connects everything
+    metadata_df = pd.read_csv(f"{config['path_to_data_dir']}/Meta.csv", sep=';')
     fert_min_df = pd.read_csv(f"{config['path_to_data_dir']}/Fertilisation_min.csv", sep=';')
     fert_org_df = pd.read_csv(f"{config['path_to_data_dir']}/Fertilisation_org.csv", sep=';')
     irrig_df = pd.read_csv(f"{config['path_to_data_dir']}/Irrigation.csv", sep=';')
@@ -139,7 +139,6 @@ def run_producer(server=None, port=None, exp_nos=None):
         fert_org_temp = copy.deepcopy(fert_org_template)
         fert_org_temp["date"] = datetime.strptime(row['Date'], '%d.%m.%Y').strftime('%Y-%m-%d')
         fert_org_temp["amount"][0] = float(row['Amount_kg_ha'])
-        # fert_org_temp["parameters"] = copy.deepcopy(cam_fert_params)
         if row['Material'] == 'Farmyard manure':
             fert_org_temp["parameters"] = copy.deepcopy(cam_fert_params)
         elif row['Material'] == 'Liquid manure':
@@ -209,21 +208,23 @@ def run_producer(server=None, port=None, exp_nos=None):
         # Residue management
         residue = str(meta.get("Residues", "")).strip()
 
-        if "straw ploughed in" == residue:
+        if residue == "straw ploughed in":
             worksteps_copy[-1]["shoot"] = {
                 "export": [0, "%"],
                 "incorporate": True
             }
-        elif "straw exported" == residue:
+        elif residue == "straw exported":
             worksteps_copy[-1]["shoot"] = {
                 "export": [100, "%"],
                 "incorporate": True
             }
-        elif "leaves ploughed in" == residue:
+        elif residue == "leaves ploughed in":
             worksteps_copy[-1]["leaf"] = {
                 "export": [0, "%"],
                 "incorporate": True
             }
+        elif residue == "whole crop ploughed in":
+            worksteps_copy[-1]["exported"] = False
 
         for date in sorted(dates):
             if date in exp_no_to_fertilizers_min[exp_no]:
@@ -274,6 +275,6 @@ if __name__ == "__main__":
     run_producer()
 
     # Run specific experiments
-    # run_producer(exp_nos=["EX1", "EX2", "EX3", "EX4", "EX5", "EX6"])  # plot1
-    # run_producer(exp_nos=["EX7", "EX8", "EX9", "EX10", "EX11", "EX12")  # plot2
-    # run_producer(exp_nos=["EX13", "EX14", "EX15", "EX16", "EX17", "EX18"])  # plot3
+    # run_producer(exp_nos=["EX1", "EX2", "EX3", "EX4", "EX5", "EX6", "EX7", "EX8"])  # plot1
+    # run_producer(exp_nos=["EX9", "EX10", "EX11", "EX12", "EX13", "EX14"])  # plot2
+    # run_producer(exp_nos=["EX15", "EX16", "EX17", "EX18", "EX19", "EX20"])  # plot3
