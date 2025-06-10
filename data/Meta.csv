@@ -4,18 +4,18 @@ EX2;plot1;ZALF_Muencheberg_V4;weather1;soil1;1993;21.05.1993;06.10.1993;irrig1;m
 EX3;plot1;ZALF_Muencheberg_V4;weather1;soil1;1994;15.10.1993;29.07.1994;no_irrig;manag3;no_fert;fert1;straw ploughed in;WW;Bussard;52.517;14.124;62
 EX4;plot1;ZALF_Muencheberg_V4;weather1;soil1;1995;26.09.1994;21.07.1995;no_irrig;manag4;no_fert;fert2;straw ploughed in;WB;Grete;52.517;14.124;62
 EX5;plot1;ZALF_Muencheberg_V4;weather1;soil1;1996;02.10.1995;21.08.1996;no_irrig;manag5;no_fert;fert3;straw ploughed in;WR;Clou;52.517;14.124;62
-EX6;plot1;ZALF_Muencheberg_V4;weather1;soil1;1997;05.09.1996;15.03.1997;no_irrig;manag6;no_fert;no_fert;whole crop ploughed in;OR;;52.517;14.124;62
-EX7;plot1;ZALF_Muencheberg_V4;weather1;soil1;1997;03.04.1997;01.10.1997;no_irrig;manag7;no_fert;fert4;leaves ploughed in;ZR;Sonja;52.517;14.124;62
-EX8;plot1;ZALF_Muencheberg_V4;weather1;soil1;1998;08.10.1997;27.07.1998;no_irrig;manag8;no_fert;fert5;straw ploughed in;WW;Bussard;52.517;14.124;62
+EX6;plot1;ZALF_Muencheberg_V4;weather1;soil1;1997;05.09.1996;15.03.1997;no_irrig;manag6;no_fert;fert4;whole crop ploughed in;OR;;52.517;14.124;62
+EX7;plot1;ZALF_Muencheberg_V4;weather1;soil1;1997;03.04.1997;01.10.1997;no_irrig;manag7;no_fert;fert5;leaves ploughed in;ZR;Sonja;52.517;14.124;62
+EX8;plot1;ZALF_Muencheberg_V4;weather1;soil1;1998;08.10.1997;27.07.1998;no_irrig;manag8;no_fert;fert6;straw ploughed in;WW;Bussard;52.517;14.124;62
 EX9;plot2;ZALF_Muencheberg_V4;weather1;soil2;1993;21.05.1993;06.10.1993;irrig2;manag9;fert1;no_fert;leaves ploughed in;ZR;Gilda;52.517;14.124;62
 EX10;plot2;ZALF_Muencheberg_V4;weather1;soil2;1994;15.10.1993;29.07.1994;no_irrig;manag10;fert2;no_fert;straw exported;WW;Ramiro;52.517;14.124;62
 EX11;plot2;ZALF_Muencheberg_V4;weather1;soil2;1995;26.09.1994;21.07.1995;no_irrig;manag11;fert3;no_fert;straw exported;WB;Berit;52.517;14.124;62
 EX12;plot2;ZALF_Muencheberg_V4;weather1;soil2;1996;02.10.1995;21.08.1996;no_irrig;manag12;fert4;no_fert;straw exported;WR;Rapid;52.517;14.124;62
 EX13;plot2;ZALF_Muencheberg_V4;weather1;soil2;1997;03.04.1997;01.10.1997;no_irrig;no_manag;no_fert;no_fert;leaves ploughed in;ZR;Sonja;52.517;14.124;62
 EX14;plot2;ZALF_Muencheberg_V4;weather1;soil2;1998;08.10.1997;27.07.1998;no_irrig;manag13;fert5;no_fert;straw exported;WW;Ramiro;52.517;14.124;62
-EX15;plot3;ZALF_Muencheberg_V4;weather1;soil3;1993;21.05.1993;06.10.1993;irrig3;manag14;fert6;fert6;leaves ploughed in;ZR;Gilda;52.517;14.124;62
-EX16;plot3;ZALF_Muencheberg_V4;weather1;soil3;1994;15.10.1993;29.07.1994;no_irrig;manag15;fert7;fert7;straw exported;WW;Greif;52.517;14.124;62
-EX17;plot3;ZALF_Muencheberg_V4;weather1;soil3;1995;26.09.1994;21.07.1995;no_irrig;manag16;no_fert;fert8;straw exported;WB;Noveta;52.517;14.124;62
-EX18;plot3;ZALF_Muencheberg_V4;weather1;soil3;1996;02.10.1995;21.08.1996;no_irrig;manag17;no_fert;fert9;straw exported;WR;Rapid;52.517;14.124;62
-EX19;plot3;ZALF_Muencheberg_V4;weather1;soil3;1997;03.04.1997;01.10.1997;no_irrig;manag18;fert8;fert10;leaves ploughed in;ZR;Sonja;52.517;14.124;62
-EX20;plot3;ZALF_Muencheberg_V4;weather1;soil3;1998;08.10.1997;27.07.1998;no_irrig;manag19;fert9;fert11;straw exported;WW;Greif;52.517;14.124;62
+EX15;plot3;ZALF_Muencheberg_V4;weather1;soil3;1993;21.05.1993;06.10.1993;irrig3;manag14;fert6;fert7;leaves ploughed in;ZR;Gilda;52.517;14.124;62
+EX16;plot3;ZALF_Muencheberg_V4;weather1;soil3;1994;15.10.1993;29.07.1994;no_irrig;manag15;fert7;fert8;straw exported;WW;Greif;52.517;14.124;62
+EX17;plot3;ZALF_Muencheberg_V4;weather1;soil3;1995;26.09.1994;21.07.1995;no_irrig;manag16;no_fert;fert9;straw exported;WB;Noveta;52.517;14.124;62
+EX18;plot3;ZALF_Muencheberg_V4;weather1;soil3;1996;02.10.1995;21.08.1996;no_irrig;manag17;no_fert;fert10;straw exported;WR;Rapid;52.517;14.124;62
+EX19;plot3;ZALF_Muencheberg_V4;weather1;soil3;1997;03.04.1997;01.10.1997;no_irrig;manag18;no_fert;fert11;leaves ploughed in;ZR;Sonja;52.517;14.124;62
+EX20;plot3;ZALF_Muencheberg_V4;weather1;soil3;1998;08.10.1997;27.07.1998;no_irrig;manag19;fert9;fert12;straw exported;WW;Greif;52.517;14.124;62
