@@ -1,10 +1,27 @@
 {
 	"crops": {
 		"OR": {
+			"is-cover-crop": true,
 			"residueParams": ["include-from-file", "monica-parameters/crop-residues/oil-radish.json"],
 			"cropParams": {
 				"cultivar": ["include-from-file", "monica-parameters/crops/oil-radish/oil-radish.json"],
 				"species": ["include-from-file", "monica-parameters/crops/oil-radish.json"]
+			}
+		},
+		"MU": {
+			"is-cover-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/mustard.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/mustard/mustard.json"],
+				"species": ["include-from-file", "monica-parameters/crops/mustard.json"]
+			}
+		},
+		"PH": {
+			"is-cover-crop": true,
+			"residueParams": ["include-from-file", "monica-parameters/crop-residues/phacelia.json"],
+			"cropParams": {
+				"cultivar": ["include-from-file", "monica-parameters/crops/phacelia/phacelia.json"],
+				"species": ["include-from-file", "monica-parameters/crops/phacelia.json"]
 			}
 		},
 		"ZR": {
@@ -80,11 +97,36 @@
 
 	"cropRotationTemplates": {
 		"OR": [{
-			"is-cover-crop": true,
 			"worksteps": [
 				{
 					"type": "Sowing",
 					"crop": ["ref", "crops", "OR"],
+					"date": "1992-09-03"
+				},
+				{
+					"type": "Harvest",
+					"date": "1993-03-15"
+				}
+			]
+		}],
+		"MU": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "MU"],
+					"date": "1992-09-03"
+				},
+				{
+					"type": "Harvest",
+					"date": "1993-03-15"
+				}
+			]
+		}],
+		"PH": [{
+			"worksteps": [
+				{
+					"type": "Sowing",
+					"crop": ["ref", "crops", "PH"],
 					"date": "1992-09-03"
 				},
 				{
