@@ -53,17 +53,11 @@ def run_consumer(server=None, port=None):
 
         # Write headers
         daily_writer.writerow([
-            "Experiment", "Crop", "Date", "Zadocks phenology stage", "N Fertilizer", "Irrigation Amount",
-            "Primary Yield", "Total above biomass", "Leaf Area Index", "Daily Transpiration",
-            "Actual evapotranspiration", "Runoff", "Deep Percolation", "N Leaching", "Soil Water Content"
+            "Experiment", "Crop", "Date", "Zadocks phenology stage", "Primary Yield", "Total above biomass",
+            "Leaf Area Index", "N", "NO3", "NH4"
         ])
 
-        swc_header_row = [f"SWC_{i}" for i in range(1, 21)]
-        n_header_row = [f"N_{i}" for i in range(1, 21)]
-        daily_writer.writerow([
-            "Exp", "Crop", "Date", "ZDPH", "NFert", "Irrig", "PYield", "AbBiom", "LAI", "TRANS", "ETa", "Roff", "DPER",
-            "NLEA"
-        ] + swc_header_row + n_header_row)
+        daily_writer.writerow(["Exp", "Crop", "Date", "ZDPH", "PYield", "AbBiom", "LAI", "N", "NO3", "NH4"])
 
         no_of_exps_to_receive = None
         no_of_exps_received = 0
@@ -99,11 +93,8 @@ def run_consumer(server=None, port=None):
                     if not sowing_date:
                         sowing_date = vals["Date"]
 
-                    swc_data = vals["SWC"]
-                    n_data = vals["N"]
-                    row = [exp_no, vals["Crop"], vals["Date"], vals["Stage"], vals["NFert"], vals["Irrig"],
-                           vals["Yield"], vals["AbBiom"], vals["LAI"], vals["TRANS"], vals["ETa"], vals["Roff"],
-                           vals["DPER"], vals["NLEA"]] + swc_data + n_data
+                    row = [exp_no, vals["Crop"], vals["Date"], vals["Stage"], vals["Yield"], vals["AbBiom"],
+                           vals["LAI"], vals["N"], vals["NO3"],vals["NH4"]]
                     daily_writer.writerow(row)
 
             except Exception as e:

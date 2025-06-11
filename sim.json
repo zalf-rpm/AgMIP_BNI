@@ -29,64 +29,16 @@
 			"csv-separator": ","
 		},
 		"events": [
-			{"start": "Sowing", "end": "Harvest"}, [
+			"daily", [
 				"Date",
 				"Crop",
 				"Stage",
 				"LAI",
 				"Yield",
 				"AbBiom",
-				"Tra|TRANS",
-				"Act_ET|ETa",
-				"RunOff|Roff",
-				["PercolationRate|DPER", 15],
-				"NLeach|NLEA",
-				["Mois|SWC", [1, 20]],
-				["N", [1, 20]],
-				"Irrig",
-				"NFert"
-			]
-		],
-		"calibration_events": [
-			{"at": "Sowing"}, [
-				["Mois", [1, 3], "SUM"],
-				["Mois", [4, 6], "SUM"],
-				["Mois", [7, 9], "SUM"],
-				["N", [1, 3], "SUM"],
-				["N", [4, 6], "SUM"],
-				["N", [7, 9], "SUM"]
-			],
-			"emergence", [
-				"Date"
-			],
-			"cereal-stem-elongation", [
-				"Date"
-			],
-			"anthesis", [
-				"Date",
-				["Mois", [1, 3], "SUM"],
-				["Mois", [4, 6], "SUM"],
-				["Mois", [7, 9], "SUM"],
-				["N", [1, 3], "SUM"],
-				["N", [4, 6], "SUM"],
-				["N", [7, 9], "SUM"]
-			],
-			"maturity", [
-				"Date"
-			],
-			{"at": "Harvest"}, [
-				"AbBiom",
-				"AbBiomNc",
-				"YieldNc",
-				["OrgBiom", "FRUIT"],
-				["OrgBiom", "Shoot"],
-				["OrgBiom", "Leaf"],
-				["Mois", [1, 3], "SUM"],
-				["Mois", [4, 6], "SUM"],
-				["Mois", [7, 9], "SUM"],
-				["N", [1, 3], "SUM"],
-				["N", [4, 6], "SUM"],
-				["N", [7, 9], "SUM"]
+				["N", [1, 6, "SUM"]],
+				["NO3", [1, 6, "SUM"]],
+				["NH4", [1, 6, "SUM"]]
 			]
 		]
 	},
